@@ -1,5 +1,7 @@
 # Notion MCP
 
+![notion-mcp-sm](https://github.com/user-attachments/assets/6c07003c-8455-4636-b298-d60ffdf46cd8)
+
 This project implements an [MCP server](https://spec.modelcontextprotocol.io/) for the Notion API. 
 
 ### Installation
