@@ -13,7 +13,7 @@
     "dev": "tsx watch scripts/start-server.ts"
   },
   "bin": {
-    "@notionhq/notion-mcp-server": "bin/cli.mjs"
+    "notion-mcp-server": "bin/cli.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
@@ -42,5 +42,16 @@
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "vitest": "^2.1.8"
-  }
+  },
+  "description": "Official MCP server for Notion API",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makenotion/notion-mcp-server.git"
+  },
+  "author": "@notionhq",
+  "bugs": {
+    "url": "https://github.com/makenotion/notion-mcp-server/issues"
+  },
+  "homepage": "https://github.com/makenotion/notion-mcp-server#readme"
 }
