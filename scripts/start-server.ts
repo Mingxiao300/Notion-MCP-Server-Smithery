@@ -58,7 +58,6 @@ export async function main(args: string[] = process.argv.slice(2)) {
 const shouldStart = process.argv[1].endsWith('notion-mcp-server')
 // Only run main if this is the entry point
 if (shouldStart) {
-  console.info('Starting server...')
   main().catch(error => {
     if (error instanceof ValidationError) {
       console.error('Invalid OpenAPI 3.1 specification:')
