@@ -1,8 +1,8 @@
-# Notion MCP
+# Notion MCP Server
 
 ![notion-mcp-sm](https://github.com/user-attachments/assets/6c07003c-8455-4636-b298-d60ffdf46cd8)
 
-This project implements an [MCP server](https://spec.modelcontextprotocol.io/) for the Notion API. 
+This project implements an [MCP server](https://spec.modelcontextprotocol.io/) for the [Notion API](https://developers.notion.com/reference/intro). 
 
 ### Installation
 
@@ -54,5 +54,5 @@ npm run build
 Execute
 
 ```
-npx @notionhq/notion-mcp-server
+npx --prefix /path/to/local/notion-mcp-server @notionhq/notion-mcp-server
 ```
