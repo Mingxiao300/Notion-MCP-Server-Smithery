@@ -8,7 +8,7 @@ This project implements an [MCP server](https://spec.modelcontextprotocol.io/) f
 
 Add the following to your `.cursor/mcp.json` or `claude_desktop_config.json` (MacOS: `~/Library/Application Support/Claude/claude_desktop_config.json`)
 
-Don't forget to modify your bearer token.
+Don't forget to add your Bearer token.
 
 ```javascript
 {
@@ -54,5 +54,5 @@ npm run build
 Execute
 
 ```
-npx --prefix /path/to/local/notion-mcp-server @notionhq/notion-mcp-server
+npx -y --prefix /path/to/local/notion-mcp-server @notionhq/notion-mcp-server
 ```
