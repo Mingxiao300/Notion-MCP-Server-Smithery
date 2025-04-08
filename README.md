@@ -6,7 +6,7 @@ This project implements an [MCP server](https://spec.modelcontextprotocol.io/) f
 
 ### Installation
 
-Add the following to your `.cursor/mcp.json` or `claude_desktop_config.json` (MacOS: `~/Library/Application Support/Claude/claude_desktop_config.json`)
+Add the following to your `.cursor/mcp.json` or `claude_desktop_config.json` (MacOS: `~/Library/Application\ Support/Claude/claude_desktop_config.json`)
 
 ```javascript
 {
@@ -29,12 +29,12 @@ Ensure relevant pages and databases are connected to your integration.
 
 ### Examples
 
-1. Using the following command
+1. Using the following instruction
 ```
 Comment "Hello MCP" on page "Getting started"
 ```
 
-AI will correctly plan two API calls, v1/search and v1/comments, to achieve the task
+AI will correctly plan two API calls, `v1/search` and `v1/comments`, to achieve the task
 
 2. Similarly, the following instruction will result in a new page named "Notion MCP" added to parent page "Development"
 ```
@@ -58,4 +58,10 @@ Execute
 
 ```
 npx -y --prefix /path/to/local/notion-mcp-server @notionhq/notion-mcp-server
+```
+
+Publish
+
+```
+npm publish --access public
 ```
