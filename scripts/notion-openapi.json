@@ -31,28 +31,7 @@
         "description": "The [API version](https://developers.notion.com/reference/versioning) to use for this request. The latest version is `2022-06-28`."
       }
     },
-    "schemas": {
-      "pageIdObject": {
-        "type": "object",
-        "properties": {
-          "page_id": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false,
-        "required": ["page_id"]
-      },
-      "databaseIdObject": {
-        "type": "object",
-        "properties": {
-          "database_id": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false,
-        "required": ["database_id"]
-      }
-    }
+    "schemas": {}
   },
   "security": [
     {
@@ -647,7 +626,14 @@
                 ],
                 "properties": {
                   "parent": {
-                    "$ref": "#/components/schemas/pageIdObject"
+                    "type": "object",
+                    "properties": {
+                      "page_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                    },
+                    "required": ["page_id"]
                   },
                   "properties": {
                     "type": "object",
@@ -717,24 +703,45 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "parent",
-                  "properties"
-                ],
+                "required": ["parent","properties"],
                 "properties": {
                   "parent": {
-                    "type": "string",
-                    "description": "A [page parent](/reference/database#page-parent)",
-                    "format": "json"
-                  },
-                  "title": {
-                    "type": "array",
-                    "description": "Title of database as it appears in Notion. An array of [rich text objects](ref:rich-text)."
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "enum": ["page_id"]
+                      },
+                      "page_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                    },
+                    "required": ["type", "page_id"]
                   },
                   "properties": {
-                    "type": "string",
+                    "type": "object",
                     "description": "Property schema of database. The keys are the names of properties as they appear in Notion and the values are [property schema objects](https://developers.notion.com/reference/property-schema-object).",
-                    "format": "json"
+                    "additionalProperties": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "object",
+                              "properties": {},
+                              "additionalProperties": false
+                            },
+                            "description": {
+                              "type": "string",
+                              "maxLength": 280,
+                              "minLength": 1
+                            }
+                          },
+                          "additionalProperties": false,
+                          "required": ["title"]
+                        }
+                      ]
+                    }
                   }
                 }
               }
