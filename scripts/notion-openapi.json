@@ -742,6 +742,40 @@
                         }
                       ]
                     }
+                  },
+                  "title": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["text"],
+                      "properties": {
+                        "text": {
+                          "type": "object",
+                          "properties": {
+                            "content": {
+                              "type": "string",
+                              "maxLength": 2000
+                            },
+                            "link": {
+                              "type": ["object", "null"],
+                              "properties": {
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": ["url"]
+                            }
+                          },
+                          "additionalProperties": false,
+                          "required": ["content"]
+                        },
+                        "type": {
+                          "enum": ["text"]
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "maxItems": 100
                   }
                 }
               }
