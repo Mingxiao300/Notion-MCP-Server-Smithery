@@ -4,6 +4,8 @@
 
 This project implements an [MCP server](https://spec.modelcontextprotocol.io/) for the [Notion API](https://developers.notion.com/reference/intro). 
 
+![mcp-demo](https://github.com/user-attachments/assets/1f82cd82-87e4-4d7c-8b72-486ef1f18663)
+
 ### Installation
 
 Add the following to your `.cursor/mcp.json` or `claude_desktop_config.json` (MacOS: `~/Library/Application\ Support/Claude/claude_desktop_config.json`)
