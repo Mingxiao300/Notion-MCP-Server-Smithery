@@ -20,17 +20,7 @@
         "scheme": "basic"
       }
     },
-    "parameters": {
-      "notionVersion": {
-        "name": "Notion-Version",
-        "in": "header",
-        "required": true,
-        "schema": {
-          "enum": ["2022-06-28"]
-        },
-        "description": "The [API version](https://developers.notion.com/reference/versioning) to use for this request. The latest version is `2022-06-28`."
-      }
-    },
+    "parameters": {},
     "schemas": {}
   },
   "security": [
@@ -562,15 +552,6 @@
               "type": "string"
             },
             "required": true
-          },
-          {
-            "name": "Notion-Version",
-            "in": "header",
-            "description": "The [API version](/reference/versioning) to use for this request. The latest version is `<<latestNotionVersion>>`.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "requestBody": {
@@ -814,15 +795,6 @@
               "type": "string"
             },
             "required": true
-          },
-          {
-            "name": "Notion-Version",
-            "in": "header",
-            "description": "The [API version](/reference/versioning) to use for this request. The latest version is `<<latestNotionVersion>>`.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "requestBody": {
@@ -832,19 +804,85 @@
                 "type": "object",
                 "properties": {
                   "title": {
+                    "description": "An array of [rich text objects](https://developers.notion.com/reference/rich-text) that represents the title of the database that is displayed in the Notion UI. If omitted, then the database title remains unchanged.",
                     "type": "array",
-                    "description": "An array of [rich text objects](https://developers.notion.com/reference/rich-text) that represents the title of the database that is displayed in the Notion UI. If omitted, then the database title remains unchanged."
+                    "items": {
+                      "type": "object",
+                      "required": ["text"],
+                      "properties": {
+                        "text": {
+                          "type": "object",
+                          "properties": {
+                            "content": {
+                              "type": "string",
+                              "maxLength": 2000
+                            },
+                            "link": {
+                              "type": ["object", "null"],
+                              "properties": {
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": ["url"]
+                            }
+                          },
+                          "additionalProperties": false,
+                          "required": ["content"]
+                        },
+                        "type": {
+                          "enum": ["text"]
+                        }
+                      },
+                      "additionalProperties": false
+                    }
                   },
                   "description": {
                     "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["text"],
+                      "properties": {
+                        "text": {
+                          "type": "object",
+                          "properties": {
+                            "content": {
+                              "type": "string",
+                              "maxLength": 2000
+                            },
+                            "link": {
+                              "type": ["object", "null"],
+                              "properties": {
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": ["url"]
+                            }
+                          },
+                          "additionalProperties": false,
+                          "required": ["content"]
+                        },
+                        "type": {
+                          "enum": ["text"]
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "maxItems": 100,
                     "description": "An array of [rich text objects](https://developers.notion.com/reference/rich-text) that represents the description of the database that is displayed in the Notion UI. If omitted, then the database description remains unchanged."
                   },
                   "properties": {
-                    "type": "string",
-                    "description": "The properties of a database to be changed in the request, in the form of a JSON object. If updating an existing property, then the keys are the names or IDs of the properties as they appear in Notion, and the values are [property schema objects](ref:property-schema-object). If adding a new property, then the key is the name of the new database property and the value is a [property schema object](ref:property-schema-object).",
-                    "format": "json"
+                    "type": "object",
+                    "description": "Property schema of database. The keys are the names of properties as they appear in Notion and the values are [property schema objects](https://developers.notion.com/reference/property-schema-object).",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
                   }
-                }
+                },
+                "additionalProperties": false
               }
             }
           }
