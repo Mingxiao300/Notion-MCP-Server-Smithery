@@ -4,7 +4,7 @@
 
 This project implements an [MCP server](https://spec.modelcontextprotocol.io/) for the [Notion API](https://developers.notion.com/reference/intro). 
 
-![mcp-demo](https://github.com/user-attachments/assets/134b1a2a-f23b-48f1-9475-d2aa201545cc)
+![mcp-demo](https://github.com/user-attachments/assets/e3ff90a7-7801-48a9-b807-f7dd47f0d3d6)
 
 ### Installation
 
