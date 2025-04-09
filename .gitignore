@@ -1,6 +1,11 @@
 node_modules/
 build/
+dist
 bin/
+
+.cache
+.yarn/cache
+.eslintcache
 
 .cursor
 
