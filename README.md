@@ -8,12 +8,13 @@ This project implements an [MCP server](https://spec.modelcontextprotocol.io/) f
 
 ### Installation
 
-#### 1 First Step:
-Go to https://www.notion.so/profile/integrations and create a new internal integration.
+#### 1. Setting up Integration in Notion:
+Go to [https://www.notion.so/profile/integrations](https://www.notion.so/profile/integrations) and create a new **internal** integration or select an existing one.
 <img width="918" alt="tutorial" src="tutorial0.png" />
 
 
-#### 2 Second Step:
+#### 2. Adding MCP config to your client:
+
  Add the following to your `.cursor/mcp.json` or `claude_desktop_config.json` (MacOS: `~/Library/Application\ Support/Claude/claude_desktop_config.json`)
 
 ```javascript
@@ -34,7 +35,7 @@ Don't forget to replace `ntn_****` with your integration secret. Find it from yo
 
 <img width="918" alt="retrieve-token" src="https://github.com/user-attachments/assets/67b44536-5333-49fa-809c-59581bf5370a" />
 
-#### 3 Third Step:
+#### 3. Connecting content to integration:
 Ensure relevant pages and databases are connected to your integration.
 
 To do this, you'll need to visit that page, and click on the 3 dots, and select "Connect to integration". 
