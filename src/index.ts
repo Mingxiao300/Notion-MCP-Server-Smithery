@@ -1,10 +1,6 @@
 import { initProxy, ValidationError } from "./init-server.js";
 import { z } from "zod";
 import path from "node:path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Configuration schema for user settings
 export const configSchema = z.object({
@@ -18,7 +14,7 @@ export type Config = z.infer<typeof configSchema>;
 // Required: Export default createServer function
 export default async function createServer({ config }: { config: Config }) {
   // Initialize the proxy with the OpenAPI spec
-  const specPath = path.resolve(__dirname, "../scripts/notion-openapi.json");
+  const specPath = path.resolve(process.cwd(), "scripts/notion-openapi.json");
   
   // Set up environment variables based on config
   if (config.notionToken) {
