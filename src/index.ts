@@ -1,69 +1,83 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { initProxy, ValidationError } from "./init-server.js";
+import { InitializeRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
-import path from "node:path";
 
-// Configuration schema for user settings - automatically detected by Smithery
+// Configuration schema - automatically detected by Smithery
 export const configSchema = z.object({
-  notionToken: z.string()
-    .describe("Notion integration token (recommended)")
-    .optional(),
-  openapiMcpHeaders: z.string()
-    .describe("JSON string for HTTP headers, must include Authorization and Notion-Version (alternative to notionToken)")
-    .optional(),
-  baseUrl: z.string()
-    .url()
-    .default("https://api.notion.com")
-    .describe("Notion API base URL"),
-}).refine(
-  (data) => data.notionToken || data.openapiMcpHeaders,
-  {
-    message: "Either notionToken or openapiMcpHeaders must be provided",
-    path: ["notionToken"]
-  }
-);
+  notionToken: z.string().describe("Notion integration token"),
+  baseUrl: z.string().default("https://api.notion.com").describe("Notion API base URL"),
+});
 
 export type Config = z.infer<typeof configSchema>;
 
 // Required: Export default createServer function
-export default async function createServer({ config }: { config: Config }) {
-  // Use config values in your server setup
-  console.log(`Notion MCP Server starting with base URL: ${config.baseUrl}`);
-  
-  // Set up environment variables based on config
-  if (config.notionToken) {
-    process.env.NOTION_TOKEN = config.notionToken;
-    console.log("Using Notion token for authentication");
-  } else if (config.openapiMcpHeaders) {
-    process.env.OPENAPI_MCP_HEADERS = config.openapiMcpHeaders;
-    console.log("Using custom headers for authentication");
-  }
-  
-  if (config.baseUrl) {
-    process.env.BASE_URL = config.baseUrl;
-  }
-
+export default function createServer({ config }: { config: Config }) {
   try {
-    // Initialize the proxy with the OpenAPI spec
-    const specPath = path.resolve(process.cwd(), "scripts/notion-openapi.json");
-    const proxy = await initProxy(specPath, config.baseUrl);
+    console.log(`Notion MCP Server starting with base URL: ${config.baseUrl}`);
+    console.log(`Using Notion token: ${config.notionToken.substring(0, 10)}...`);
     
-    // For Smithery, we need to return the server directly
-    // The proxy contains the MCP server that Smithery will use
-    const server = proxy.getServer();
+    // Validate token format
+    if (!config.notionToken.startsWith('secret_') && !config.notionToken.startsWith('ntn_')) {
+      throw new Error(`Invalid Notion token format. Expected token starting with 'secret_' or 'ntn_', got: ${config.notionToken.substring(0, 10)}...`);
+    }
     
-    // Log successful initialization
+    // Set up environment variables based on config
+    process.env.NOTION_TOKEN = config.notionToken;
+    process.env.BASE_URL = config.baseUrl;
+    
+    console.log("Environment variables set successfully");
+
+    // Create a simple MCP server for Smithery
+    const server = new Server({
+      name: "Notion API",
+      version: "1.9.0",
+    }, {
+      capabilities: {
+        tools: {}
+      }
+    });
+
+    // Add proper MCP request handlers using schema objects
+    server.setRequestHandler(InitializeRequestSchema, async () => {
+      console.log("Handling initialize request");
+      return {
+        protocolVersion: "2025-06-18",
+        capabilities: {
+          tools: {}
+        },
+        serverInfo: {
+          name: "Notion API",
+          version: "1.9.0"
+        }
+      };
+    });
+
+    server.setRequestHandler(ListToolsRequestSchema, async () => {
+      console.log("Handling tools/list request");
+      return {
+        tools: [
+          {
+            name: "notion-test",
+            description: "Test tool for Notion MCP Server",
+            inputSchema: {
+              type: "object",
+              properties: {
+                message: {
+                  type: "string",
+                  description: "Test message"
+                }
+              }
+            }
+          }
+        ]
+      };
+    });
+
     console.log("Notion MCP Server initialized successfully");
     
     return server;
-  } catch (error) {
-    console.error("Failed to initialize Notion MCP Server:", error);
-    if (error instanceof ValidationError) {
-      console.error('Invalid OpenAPI 3.1 specification:');
-      error.errors.forEach(err => console.error(err));
-    } else {
-      console.error('Error details:', error);
-    }
-    throw error;
+  } catch (err) {
+    console.error("Server init failed:", err);
+    throw err;
   }
 }
