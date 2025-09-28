@@ -2,7 +2,13 @@ import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { InitializeRequestSchema, ListToolsRequestSchema, CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 import { MCPProxy } from "./openapi-mcp-server/mcp/proxy.js";
-import notionOpenApiSpec from "../scripts/notion-openapi.json" assert { type: "json" };
+import { readFileSync } from "fs";
+import { join } from "path";
+
+// Load OpenAPI spec dynamically
+const notionOpenApiSpec = JSON.parse(
+  readFileSync(join(process.cwd(), "scripts/notion-openapi.json"), "utf-8")
+);
 
 // Configuration schema - automatically detected by Smithery
 export const configSchema = z.object({
