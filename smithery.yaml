@@ -1,1 +1,4 @@
 runtime: "typescript"
+publish: false
+registry:
+  enabled: false
