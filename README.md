@@ -142,7 +142,7 @@ Add the following to your `.cursor/mcp.json` or `claude_desktop_config.json`:
         "mcp/notion"
       ],
       "env": {
-        "OPENAPI_MCP_HEADERS": "{\"Authorization\":\"Bearer ntn_****\",\"Notion-Version\":\"2022-06-28\"}"
+        "OPENAPI_MCP_HEADERS": "{\"Authorization\":\"Bearer ntn_****\",\"Notion-Version\": \"2022-06-28\"}"
       }
     }
   }
@@ -211,10 +211,10 @@ Don't forget to replace `ntn_****` with your integration secret. Find it from yo
 
 [![smithery badge](https://smithery.ai/badge/@makenotion/notion-mcp-server)](https://smithery.ai/server/@makenotion/notion-mcp-server)
 
-To install Notion API Server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@makenotion/notion-mcp-server):
+To install Notion API Server automatically via [Smithery](https://smithery.ai/server/@makenotion/notion-mcp-server):
 
 ```bash
-npx -y @smithery/cli install @makenotion/notion-mcp-server --client claude
+npx -y @smithery/cli install @makenotion/notion-mcp-server
 ```
 
 ### Transport Options
@@ -325,3 +325,4 @@ Publish
 ```
 npm publish --access public
 ```
+
