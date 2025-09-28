@@ -1,3 +1,4 @@
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { initProxy, ValidationError } from "./init-server.js";
 import { z } from "zod";
 import path from "node:path";
@@ -26,9 +27,6 @@ export type Config = z.infer<typeof configSchema>;
 
 // Required: Export default createServer function
 export default async function createServer({ config }: { config: Config }) {
-  // Initialize the proxy with the OpenAPI spec
-  const specPath = path.resolve(process.cwd(), "scripts/notion-openapi.json");
-  
   // Use config values in your server setup
   console.log(`Notion MCP Server starting with base URL: ${config.baseUrl}`);
   
@@ -46,16 +44,25 @@ export default async function createServer({ config }: { config: Config }) {
   }
 
   try {
-    // Initialize the proxy and return it
-    // The proxy contains the MCP server that Smithery will use
+    // Initialize the proxy with the OpenAPI spec
+    const specPath = path.resolve(process.cwd(), "scripts/notion-openapi.json");
     const proxy = await initProxy(specPath, config.baseUrl);
-    return proxy.getServer();
+    
+    // For Smithery, we need to return the server directly
+    // The proxy contains the MCP server that Smithery will use
+    const server = proxy.getServer();
+    
+    // Log successful initialization
+    console.log("Notion MCP Server initialized successfully");
+    
+    return server;
   } catch (error) {
+    console.error("Failed to initialize Notion MCP Server:", error);
     if (error instanceof ValidationError) {
       console.error('Invalid OpenAPI 3.1 specification:');
       error.errors.forEach(err => console.error(err));
     } else {
-      console.error('Error:', error);
+      console.error('Error details:', error);
     }
     throw error;
   }
