@@ -1,5 +1,6 @@
 # Personal Notion MCP Server
 
+[![smithery badge](https://smithery.ai/badge/@Mingxiao300/notion-mcp-server-smithery)](https://smithery.ai/server/@Mingxiao300/notion-mcp-server-smithery)
 A Model Context Protocol (MCP) server that connects AI assistants to my personal Notion workspace, specifically designed to access and query my study notes and lecture materials collected over the years.
 
 ## What This MCP Does
@@ -34,6 +35,14 @@ When users ask questions, the MCP server automatically:
 4. **Maintains Context**: Preserves conversation flow while accessing multiple knowledge sources
 
 ## Smithery Deployment
+
+### Installing via Smithery
+
+To install Personal Notion MCP automatically via [Smithery](https://smithery.ai/server/@Mingxiao300/notion-mcp-server-smithery):
+
+```bash
+npx -y @smithery/cli install @Mingxiao300/notion-mcp-server-smithery
+```
 
 This MCP server is configured for deployment on the Smithery platform using:
 
